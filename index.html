@@ -14,7 +14,7 @@ const drumset = new Tone.Players({
 }).toDestination()
 drumset.connect(wave)
 
-const filePath = 'https://algorithmicmusic.online/audios/more-spell-on-you.wav'
+const filePath = 'untitled-05-09212014-4_drTFDEs2.mp3'
 const player = new Tone.Player(filePath).toDestination()
 player.connect(wave)
 
@@ -50,8 +50,8 @@ function updatePatternAndCuts (bar, beat) {
   // random cut selection
   cuts[bar][beat] = {
     offset: nn.random(0, player.buffer.duration),
-    // set duraton to length of a beat
-    duration: 60 / Tone.Transport.bpm.value
+    duration: 60 / Tone.Transport.bpm.value,
+    reverse: Math.random() < 0.5
   }
 }
 
@@ -89,7 +89,17 @@ function play (time) {
   const cut = cuts[bar][beat]
   if (val) { // if sequence is checked
     // play back the current "cut"
+    player.reverse = cut.reverse
     player.start(time, cut.offset, cut.duration)
+    if (cut.reverse) {
+    reverseLabel.content('Reverse? Yes')
+    document.body.style.background = 'red'
+
+    
+  } else {
+    reverseLabel.content('Reverse? No')
+    document.body.style.background = 'green'
+  }
   }
 
   // backing drum beat; play kick start of every first beat+bar
@@ -101,6 +111,15 @@ function play (time) {
 }
 
 new Tone.Loop(play).start()
+  
+  
+//Additions
+const reverb = new Tone.Reverb({
+  decay: 2,
+  wet: 0.3
+}).toDestination()
+player.chain(reverb)
+
 
 // UI
 nn.create('button')
@@ -118,5 +137,9 @@ const bpmInput = nn.create('input')
   .set('value', 0)
   .addTo('body')
   .on('change', updateBPM)
+
+const reverseLabel = nn.create('label')
+  .content('Reverse? none')
+  .addTo('body')
 
 </script>
