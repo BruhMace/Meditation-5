@@ -1,3 +1,13 @@
+<h1>Meditation #5</h1>
+<h2>by Maceo</h2>
+I was really impressed by the randomized sampling cutup example from the notes. I recently purchased FL Studio, as this class inspired me to experiment with a professional DAW. I’ve found that what I’ve learned in this class, along with my guitar playing, has made features like the piano roll and channel rack relatively easy to pick up, but sampling has been more difficult to grasp. I was surprised by how well the randomized cuts in the class example worked. Even though they were chosen at random, most of them sounded good. That made me really intrigued by the example and motivated me to create my own remix of it.
+
+
+<p>
+In some of my favorite songs that use samples, producers reverse the sample to create a completely new sound. Playboi Carti’s Fell in Luv, which samples Purity Ring’s Grandloves, remains my favorite reversed sample of all time. That inspired me to experiment by having about half of the cutups play in reverse. When I implemented this, I thought I could hear the reversals happening, but since some were subtle, I added a message that would tell me whether the sample was reversed. I also made the background change color with red for reversed and green for normalto visualize it. Finally, I added some reverb to give the samples and drums a bit more oomph. Overall, this meditation gave me a completely new perspective on sampling. I realized it’s not always about finding the perfect chops and that you can make sampling sound good with almost anything.
+<p>
+</p>
+
 <body style="background: white"></body>
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <script src="https://unpkg.com/tone"></script>
@@ -87,15 +97,12 @@ function play (time) {
 
   const val = pattern[bar][beat]
   const cut = cuts[bar][beat]
-  if (val) { // if sequence is checked
-    // play back the current "cut"
+  if (val) { 
     player.reverse = cut.reverse
     player.start(time, cut.offset, cut.duration)
     if (cut.reverse) {
     reverseLabel.content('Reverse? Yes')
     document.body.style.background = 'red'
-
-    
   } else {
     reverseLabel.content('Reverse? No')
     document.body.style.background = 'green'
@@ -113,7 +120,7 @@ function play (time) {
 new Tone.Loop(play).start()
   
   
-//Additions
+//Effects
 const reverb = new Tone.Reverb({
   decay: 2,
   wet: 0.3
